@@ -1,0 +1,18 @@
+{
+  "addNewTask": "اضافة مهمة جديدة",
+  "addTask": "اضافة مهمة",
+  "title": "عنوان",
+  "description": "وصف",
+  "selectTime": "حدد الوقت",
+  "selectDate": "حدد التاريخ",
+  "delete": "حذف",
+  "edit": "تعديل",
+  "arabic":"العربية",
+  "english":"الانجليزية",
+  "theme":"السمة",
+  "language":"اللغة",
+  "dark":"داكن",
+  "light":"فاتح",
+  "settings":"الاعدادات",
+  "home":"الرئيسية"
+}

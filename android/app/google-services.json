@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1048575228741",
+    "project_id": "todo-app-route-18daa",
+    "storage_bucket": "todo-app-route-18daa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1048575228741:android:bf8a0956f2a7ed795b9c2c",
+        "android_client_info": {
+          "package_name": "com.hossam.route"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvOO7sRVEPSUOdQ4bBgzmuUUMZBJ2b1SY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

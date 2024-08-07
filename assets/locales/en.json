@@ -1,0 +1,18 @@
+{
+  "addNewTask": "Add New Task",
+  "addTask": "Add Task",
+  "title": "Title",
+  "description": "Description",
+  "selectTime": "Select Time",
+  "selectDate": "Select Date",
+  "delete": "Delete",
+  "edit": "Edit",
+  "arabic":  "Arabic",
+  "english": "English",
+  "theme": "Theme",
+  "language": "Language",
+  "dark": "Dark",
+  "light": "Light",
+  "settings": "Settings",
+  "home": "Home"
+}
