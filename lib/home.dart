@@ -59,13 +59,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
         notchMargin: 8,
         padding: EdgeInsets.zero,
         shape: const CircularNotchedRectangle(),
         child: BottomNavigationBar(
             elevation: 0,
-            backgroundColor: Colors.transparent,
             selectedItemColor: AppColors.primary,
             unselectedItemColor: AppColors.grey,
             // showUnselectedLabels: false,

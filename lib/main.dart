@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app_route/firebase_options.dart';
 import 'package:todo_app_route/home.dart';
 import 'package:todo_app_route/update_task_screen.dart';
 
@@ -12,9 +11,9 @@ import 'utils/my_theme_data.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],

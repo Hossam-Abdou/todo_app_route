@@ -12,7 +12,7 @@ class TaskItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 115,
+      height: 105,
       margin: const EdgeInsets.symmetric(horizontal: 12),
       width: double.infinity,
       decoration: BoxDecoration(
@@ -20,6 +20,20 @@ class TaskItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(25),
       ),
       child: Slidable(
+        endActionPane: ActionPane(
+          motion: const DrawerMotion(),
+          children: [
+            SlidableAction(
+              onPressed: (context) {
+                Navigator.pushNamed(context, UpdateTaskScreen.routeName);
+              },
+              label: AppStrings.edit.tr(),
+              backgroundColor: Colors.blue,
+              icon: Icons.edit,
+              spacing: 8,
+            ),
+          ],
+        ),
         startActionPane: ActionPane(
             motion: const DrawerMotion(),
             extentRatio: 0.6,
@@ -35,15 +49,6 @@ class TaskItem extends StatelessWidget {
                     topLeft: Radius.circular(25),
                     bottomLeft: Radius.circular(25)),
               ),
-              SlidableAction(
-                onPressed: (context) {
-                  Navigator.pushNamed(context, UpdateTaskScreen.routeName);
-                },
-                label: AppStrings.edit.tr(),
-                backgroundColor: Colors.blue,
-                icon: Icons.edit,
-                spacing: 8,
-              ),
             ]),
         child: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -54,7 +59,6 @@ class TaskItem extends StatelessWidget {
                 color: AppColors.primary,
                 indent: 5,
                 endIndent: 5,
-
               ),
               // Container(
               //   height: 80,

@@ -11,19 +11,17 @@ class TasksTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CalendarTimeline(
+        CalendarTimeline(height: 70,
           showYears: true,
           initialDate: DateTime.now(),
           firstDate: DateTime.now().subtract(const Duration(days: 365)),
           lastDate: DateTime.now().add(const Duration(days: 365)),
           onDateSelected: (date) => debugPrint('date  $date'),
-          leftMargin: 15,
           monthColor: AppColors.grey,
           dayColor: AppColors.primary,
           activeDayColor: Colors.white,
           activeBackgroundDayColor: AppColors.primary,
           dotColor: Colors.white,
-          selectableDayPredicate: (date) => date.day != 27,
           locale: 'en',
         ),
         const SizedBox(height: 24),

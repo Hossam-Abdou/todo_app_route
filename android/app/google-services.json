@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1048575228741:android:bf8a0956f2a7ed795b9c2c",
         "android_client_info": {
-          "package_name": "com.hossam.route"
+          "package_name": "com.example.todo_app_route"
         }
       },
       "oauth_client": [],
