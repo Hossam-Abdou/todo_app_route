@@ -40,13 +40,13 @@ dependencies:
   easy_localization: ^3.0.7
   provider:
   google_fonts:
-  animated_splash_screen:
+#  animated_splash_screen:
   firebase_core:
   cloud_firestore:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_native_splash:
+#  flutter_native_splash:
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

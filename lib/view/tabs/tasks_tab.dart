@@ -1,7 +1,8 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app_route/utils/app_colors.dart';
-import 'package:todo_app_route/task_item.dart';
+import 'package:todo_app_route/utils/component/task_item.dart';
 
 
 class TasksTab extends StatelessWidget {
@@ -22,7 +23,7 @@ class TasksTab extends StatelessWidget {
           activeDayColor: Colors.white,
           activeBackgroundDayColor: AppColors.primary,
           dotColor: Colors.white,
-          locale: 'en',
+          locale:context.locale == const Locale('ar')? 'ar' : 'en',
         ),
         const SizedBox(height: 24),
         Expanded(

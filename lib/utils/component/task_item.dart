@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:todo_app_route/update_task_screen.dart';
+import 'package:todo_app_route/view/update_task_screen.dart';
 import 'package:todo_app_route/utils/app_colors.dart';
 
-import 'utils/app_strings.dart';
+import '../app_strings.dart';
 
 class TaskItem extends StatelessWidget {
   const TaskItem({super.key});

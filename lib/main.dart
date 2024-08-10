@@ -2,25 +2,39 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app_route/home.dart';
-import 'package:todo_app_route/update_task_screen.dart';
+import 'package:todo_app_route/firebase_options.dart';
+import 'package:todo_app_route/view/home.dart';
+import 'package:todo_app_route/view/splash_screen.dart';
+import 'package:todo_app_route/view/update_task_screen.dart';
 
 import 'providers/my_provider.dart';
+import 'services/shared_prefrence/cached_keys.dart';
+import 'services/shared_prefrence/sp_helper.dart';
 import 'utils/my_theme_data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  await SharedPrefrenceHelper.init();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  String? savedThemeMode = await SharedPrefrenceHelper.getData(key: CachedKeys.currentThemeMode);
+  ThemeMode initialThemeMode = ThemeMode.light;
+
+  if (savedThemeMode != null) {
+    if (savedThemeMode == ThemeMode.dark.toString()) {
+      initialThemeMode = ThemeMode.dark;
+    }
+  }
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],
       path: 'assets/locales',
       startLocale: const Locale('ar'),
       child: ChangeNotifierProvider(
-        create: (context) => MyProvider(),
+        create: (context) => MyProvider()..mode = initialThemeMode,
         child: const MyApp(),
       ),
     ),
@@ -38,13 +52,14 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      initialRoute: HomeScreen.routeName,
+      initialRoute: SplashScreen.routeName,
       themeMode: provider.mode,
       theme: MyThemeData.lightTheme,
       darkTheme: MyThemeData.darkTheme,
       routes: {
         HomeScreen.routeName: (context) => const HomeScreen(),
         UpdateTaskScreen.routeName: (context) => const UpdateTaskScreen(),
+        SplashScreen.routeName: (context) => const SplashScreen(),
       },
       debugShowCheckedModeBanner: false,
     );

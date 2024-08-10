@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app_route/providers/my_provider.dart';
+import 'package:todo_app_route/services/shared_prefrence/cached_keys.dart';
+import 'package:todo_app_route/services/shared_prefrence/sp_helper.dart';
 import 'package:todo_app_route/utils/app_colors.dart';
 import 'package:todo_app_route/utils/app_strings.dart';
 
@@ -17,7 +19,7 @@ class ThemeBottomSheet extends StatelessWidget {
         children: [
           InkWell(
             onTap: () async {
-              // print('the shared is : ${await SharedPrefrenceHelper.getData(key: CachedKeys.currentThemeMode)}');
+              print('the shared is : ${await SharedPrefrenceHelper.getData(key: CachedKeys.currentThemeMode)}');
               themeProvider.changeThemeMode(ThemeMode.light);
               Navigator.pop(context);
             },
