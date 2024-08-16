@@ -43,6 +43,7 @@ dependencies:
 #  animated_splash_screen:
   firebase_core:
   cloud_firestore:
+  shared_preferences: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

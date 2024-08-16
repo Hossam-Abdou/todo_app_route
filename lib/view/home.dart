@@ -4,8 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app_route/utils/app_colors.dart';
 import 'package:todo_app_route/utils/app_strings.dart';
 import 'package:todo_app_route/utils/component/bottom_sheets/add_task_bottom_sheet.dart';
-
-import '../providers/my_provider.dart';
+import 'package:todo_app_route/view_model/providers/my_provider.dart';
 import 'tabs/settings_tab.dart';
 import 'tabs/tasks_tab.dart';
 
@@ -30,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           "ToDo App",
 
@@ -38,6 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          provider.titleController.clear();
+          provider.descriptionController.clear();
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,

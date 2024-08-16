@@ -20,8 +20,9 @@ class SharedPrefrenceHelper {
     }
     if (value is double) {
       return await sharedPreferences!.setDouble(key, value);
-    } else
+    } else {
       return false;
+    }
   }
 
   static dynamic getData({required String key}) {

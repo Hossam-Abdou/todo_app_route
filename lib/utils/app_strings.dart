@@ -15,4 +15,5 @@ class AppStrings{
   static  String light = "light";
   static  String settings = "settings";
   static  String home = "home";
+  static  String saveChanges = "saveChanges";
 }

@@ -1,12 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:todo_app_route/providers/my_provider.dart';
 import 'package:todo_app_route/utils/app_colors.dart';
 import 'package:todo_app_route/utils/app_strings.dart';
 import 'package:todo_app_route/utils/component/bottom_sheets/language_bottom_sheeet.dart';
 import 'package:todo_app_route/utils/component/bottom_sheets/theme_bottom_sheet.dart';
+import 'package:todo_app_route/view_model/providers/my_provider.dart';
 
 class SettingsTab extends StatelessWidget {
   const SettingsTab({super.key});

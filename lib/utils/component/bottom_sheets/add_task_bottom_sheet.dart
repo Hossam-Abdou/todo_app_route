@@ -1,19 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app_route/providers/my_provider.dart';
+import 'package:todo_app_route/firebase_functions.dart';
+import 'package:todo_app_route/model/task_model.dart';
 import 'package:todo_app_route/utils/app_colors.dart';
 import 'package:todo_app_route/utils/app_strings.dart';
+import 'package:todo_app_route/view_model/providers/my_provider.dart';
 
-class AddTaskBottomSheet extends StatefulWidget {
+class AddTaskBottomSheet extends StatelessWidget {
   const AddTaskBottomSheet({super.key});
-
-  @override
-  State<AddTaskBottomSheet> createState() => _AddTaskBottomSheetState();
-}
-
-class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
-  DateTime selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -32,30 +27,37 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
           ),
           const SizedBox(height: 24),
           TextFormField(
+            style: TextStyle(
+              color: provider.mode == ThemeMode.dark? Colors.white: Colors.black,
+            ),
+            controller: provider.titleController,
             decoration: InputDecoration(
-                label: Text(
-                  AppStrings.title.tr(),
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(18),
-                    borderSide: BorderSide(
-                        color:provider .mode == ThemeMode.dark
-                            ? Colors.white
-                            : AppColors.primary)),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(18),
-                    borderSide: BorderSide(
-                        color:provider .mode == ThemeMode.dark
-                            ? Colors.white
-                            : AppColors.primary)
-                ),
+              label: Text(
+                AppStrings.title.tr(),
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  borderSide: BorderSide(
+                      color: provider.mode == ThemeMode.dark
+                          ? Colors.white
+                          : AppColors.primary)),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  borderSide: BorderSide(
+                      color: provider.mode == ThemeMode.dark
+                          ? Colors.white
+                          : AppColors.primary)),
             ),
           ),
           const SizedBox(
             height: 18,
           ),
           TextFormField(
+            controller: provider.descriptionController,
+            style: TextStyle(
+              color: provider.mode == ThemeMode.dark? Colors.white: Colors.black,
+            ),
             decoration: InputDecoration(
               label: Text(
                 AppStrings.description.tr(),
@@ -64,16 +66,15 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
                   borderSide: BorderSide(
-                      color:provider .mode == ThemeMode.dark
+                      color: provider.mode == ThemeMode.dark
                           ? Colors.white
                           : AppColors.primary)),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(18),
+                  borderRadius: BorderRadius.circular(18),
                   borderSide: BorderSide(
-                      color:provider .mode == ThemeMode.dark
+                      color: provider.mode == ThemeMode.dark
                           ? Colors.white
-                          : AppColors.primary)
-              ),
+                          : AppColors.primary)),
             ),
           ),
           const SizedBox(
@@ -92,10 +93,10 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
           ),
           InkWell(
             onTap: () {
-              selectDataFun();
+              provider.selectDataFun(context);
             },
             child: Text(
-              selectedDate.toString().substring(0, 10),
+              provider.selectedDate.toString().substring(0, 10),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20,
@@ -108,10 +109,18 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
             height: 18,
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              TaskModel? model = TaskModel(
+                title: provider.titleController.text,
+                description: provider.descriptionController.text,
+                date: provider.selectedDate.millisecondsSinceEpoch,
+              );
+              FirebaseFunctions.addTask(model);
+              Navigator.pop(context);
+            },
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-            child:  Text(
-             AppStrings.addTask.tr(),
+            child: Text(
+              AppStrings.addTask.tr(),
               style: const TextStyle(
                 fontSize: 20,
                 color: Colors.white,
@@ -122,20 +131,5 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
         ],
       ),
     );
-  }
-
-  selectDataFun() async {
-    DateTime? chosenDate = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(
-        const Duration(days: 365),
-      ),
-    );
-    if (chosenDate != null) {
-      selectedDate = chosenDate;
-      setState(() {});
-    }
   }
 }

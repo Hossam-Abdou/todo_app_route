@@ -7,10 +7,10 @@ import 'package:todo_app_route/view/home.dart';
 import 'package:todo_app_route/view/splash_screen.dart';
 import 'package:todo_app_route/view/update_task_screen.dart';
 
-import 'providers/my_provider.dart';
 import 'services/shared_prefrence/cached_keys.dart';
 import 'services/shared_prefrence/sp_helper.dart';
 import 'utils/my_theme_data.dart';
+import 'view_model/providers/my_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +27,9 @@ void main() async {
     if (savedThemeMode == ThemeMode.dark.toString()) {
       initialThemeMode = ThemeMode.dark;
     }
+    else{
+      savedThemeMode == ThemeMode.light.toString();
+    }
   }
   runApp(
     EasyLocalization(
@@ -34,7 +37,7 @@ void main() async {
       path: 'assets/locales',
       startLocale: const Locale('ar'),
       child: ChangeNotifierProvider(
-        create: (context) => MyProvider()..mode = initialThemeMode,
+        create: (context) => MyProvider()..mode ,
         child: const MyApp(),
       ),
     ),
