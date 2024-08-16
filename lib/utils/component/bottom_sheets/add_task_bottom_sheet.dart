@@ -7,8 +7,15 @@ import 'package:todo_app_route/utils/app_colors.dart';
 import 'package:todo_app_route/utils/app_strings.dart';
 import 'package:todo_app_route/view_model/providers/my_provider.dart';
 
-class AddTaskBottomSheet extends StatelessWidget {
+class AddTaskBottomSheet extends StatefulWidget {
   const AddTaskBottomSheet({super.key});
+
+  @override
+  State<AddTaskBottomSheet> createState() => _AddTaskBottomSheetState();
+}
+
+class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
+  DateTime selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -93,10 +100,10 @@ class AddTaskBottomSheet extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              provider.selectDataFun(context);
+              selectDataFun();
             },
             child: Text(
-              provider.selectedDate.toString().substring(0, 10),
+              selectedDate.toString().substring(0, 10),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20,
@@ -113,7 +120,7 @@ class AddTaskBottomSheet extends StatelessWidget {
               TaskModel? model = TaskModel(
                 title: provider.titleController.text,
                 description: provider.descriptionController.text,
-                date: provider.selectedDate.millisecondsSinceEpoch,
+                date: selectedDate.millisecondsSinceEpoch,
               );
               FirebaseFunctions.addTask(model);
               Navigator.pop(context);
@@ -131,5 +138,22 @@ class AddTaskBottomSheet extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void selectDataFun() async {
+    DateTime? newSelectedDate = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2010),
+      lastDate: DateTime(2025),
+    );
+    if (newSelectedDate != null) {
+      setState(() {
+        selectedDate = newSelectedDate;
+        setState(() {
+
+        });
+      });
+    }
   }
 }

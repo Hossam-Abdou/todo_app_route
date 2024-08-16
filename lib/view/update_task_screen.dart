@@ -7,18 +7,25 @@ import 'package:todo_app_route/utils/app_colors.dart';
 import 'package:todo_app_route/utils/app_strings.dart';
 import 'package:todo_app_route/view_model/providers/my_provider.dart';
 
-class UpdateTaskScreen extends StatelessWidget {
+class UpdateTaskScreen extends StatefulWidget {
   static const String routeName = "updateTaskScreen";
 
   const UpdateTaskScreen({super.key});
 
   @override
+  State<UpdateTaskScreen> createState() => _UpdateTaskScreenState();
+}
+
+class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
+  DateTime selectedDate = DateTime.now();
+
+  @override
   Widget build(BuildContext context) {
     var provider = Provider.of<MyProvider>(context);
     TaskModel model = ModalRoute.of(context)?.settings.arguments as TaskModel;
-    provider.titleController.text = model.title;
-    provider.descriptionController.text = model.description;
-    provider.selectedDate = DateTime.fromMillisecondsSinceEpoch(model.date);
+    // provider.titleController.text = model.title;
+    // provider.descriptionController.text = model.description;
+    // selectedDate = DateTime.fromMillisecondsSinceEpoch(model.date);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -103,10 +110,10 @@ class UpdateTaskScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      provider.selectDataFun(context);
+                     selectDataFun(context);
                     },
                     child: Text(
-                      provider.selectedDate.toString().substring(0, 10),
+                      selectedDate.toString().substring(0, 10),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20,
@@ -124,7 +131,7 @@ class UpdateTaskScreen extends StatelessWidget {
                       onPressed: () {
                         model.title = provider.titleController.text;
                         model.description = provider.descriptionController.text;
-                        model.date = provider.selectedDate.millisecondsSinceEpoch;
+                        model.date = selectedDate.millisecondsSinceEpoch;
                         FirebaseFunctions.updateTask(model);
 
                       },
@@ -146,5 +153,22 @@ class UpdateTaskScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+  selectDataFun(context) async {
+    DateTime? chosenDate = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(
+        const Duration(days: 365),
+      ),
+    );
+    if (chosenDate != null) {
+      selectedDate = chosenDate;
+      setState(() {
+
+      });
+    }
+
   }
 }
