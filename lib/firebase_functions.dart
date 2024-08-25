@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:todo_app_route/model/task_model.dart';
+import 'package:flutter/material.dart';
+import 'package:todo_app_route/features/auth/model/user_model.dart';
+import 'package:todo_app_route/features/home/model/task_model.dart';
 
 class FirebaseFunctions {
 
@@ -12,6 +14,15 @@ class FirebaseFunctions {
     );
   }
 
+  // static CollectionReference<UserModel> getUsersCollection() {
+  //   return FirebaseFirestore.instance
+  //       .collection('Users')
+  //       .withConverter<UserModel>(
+  //     fromFirestore: (snapshot, _) => UserModel.fromJson(snapshot.data()!),
+  //     toFirestore: (UserModel, _) => UserModel.toJson(),
+  //   );
+  // }
+
 
   static Future<void> addTask(TaskModel model) async {
     var collection = getCollection();
@@ -20,10 +31,17 @@ class FirebaseFunctions {
     docInfo.set(model);
 
   }
+  //
+  // static Future<void> addUser(UserModel userModel) async {
+  //   var collection = getCollection();
+  //   var docInfo= collection.doc();
+  //
+  // }
 
-  static Future<void> updateTask(TaskModel model) async {
+  static Future<void> updateTask(TaskModel model)  {
+
     var collection = getCollection();
-    await collection.doc(model.id).update(model.toJson());
+     return getCollection().doc(model.id).update(model.toJson());
   }
 
   static Future<void> deleteTask(String taskId) async {
@@ -33,8 +51,9 @@ class FirebaseFunctions {
 
 
 
-  static Stream<QuerySnapshot<TaskModel>> getTasks() {
+  static Stream<QuerySnapshot<TaskModel>> getTasks(DateTime dateTime) {
     var collection = getCollection();
-    return collection.orderBy('date', descending: true).snapshots();
+    return collection.where('date',isEqualTo: DateUtils.dateOnly(dateTime).millisecondsSinceEpoch).snapshots();
+    // return collection.orderBy('date', descending: true).snapshots();
   }
 }

@@ -16,4 +16,10 @@ class AppStrings{
   static  String settings = "settings";
   static  String home = "home";
   static  String saveChanges = "saveChanges";
+  static  String forgetPassword = "forgetPassword";
+  static  String login = "login";
+  static  String signUp = "signUp";
+  static  String email = "email";
+  static  String password = "password";
+
 }

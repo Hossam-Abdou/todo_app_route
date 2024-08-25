@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app_route/utils/app_colors.dart';
-import 'package:todo_app_route/utils/app_strings.dart';
-import 'package:todo_app_route/utils/component/bottom_sheets/add_task_bottom_sheet.dart';
-import 'package:todo_app_route/view_model/providers/my_provider.dart';
+import 'package:todo_app_route/core/utils/app_colors.dart';
+import 'package:todo_app_route/core/utils/app_strings.dart';
+import 'package:todo_app_route/core/utils/component/bottom_sheets/add_task_bottom_sheet.dart';
+import 'package:todo_app_route/features/home/view_model/my_provider.dart';
 import 'tabs/settings_tab.dart';
 import 'tabs/tasks_tab.dart';
 
@@ -38,8 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          provider.titleController.clear();
-          provider.descriptionController.clear();
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,

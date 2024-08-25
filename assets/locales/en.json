@@ -15,5 +15,10 @@
   "light": "Light",
   "settings": "Settings",
   "home": "Home",
-  "saveChanges": "Save Changes"
+  "saveChanges": "Save Changes",
+  "forgetPassword": "Forgot Password ?",
+  "login": "Login",
+  "signUp": "Sign Up",
+  "email": "E-mail",
+  "password": "Password"
 }

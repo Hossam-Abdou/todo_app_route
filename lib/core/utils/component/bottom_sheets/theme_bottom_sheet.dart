@@ -1,11 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app_route/services/shared_prefrence/cached_keys.dart';
-import 'package:todo_app_route/services/shared_prefrence/sp_helper.dart';
-import 'package:todo_app_route/utils/app_colors.dart';
-import 'package:todo_app_route/utils/app_strings.dart';
-import 'package:todo_app_route/view_model/providers/my_provider.dart';
+import 'package:todo_app_route/features/home/view_model/my_provider.dart';
+import 'package:todo_app_route/core/services/shared_prefrence/cached_keys.dart';
+import 'package:todo_app_route/core/services/shared_prefrence/sp_helper.dart';
+import 'package:todo_app_route/core/utils/app_colors.dart';
+import 'package:todo_app_route/core/utils/app_strings.dart';
 
 class ThemeBottomSheet extends StatelessWidget {
   const ThemeBottomSheet({super.key});
@@ -47,6 +47,8 @@ class ThemeBottomSheet extends StatelessWidget {
           ),
           InkWell(
             onTap: () async {
+              debugPrint('the shared is : ${await SharedPrefrenceHelper.getData(key: CachedKeys.currentThemeMode)}');
+
               themeProvider.changeThemeMode(ThemeMode.dark);
               Navigator.pop(context);
             },

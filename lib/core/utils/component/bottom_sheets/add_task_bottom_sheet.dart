@@ -1,11 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app_route/firebase_functions.dart';
-import 'package:todo_app_route/model/task_model.dart';
-import 'package:todo_app_route/utils/app_colors.dart';
-import 'package:todo_app_route/utils/app_strings.dart';
-import 'package:todo_app_route/view_model/providers/my_provider.dart';
+import 'package:todo_app_route/core/utils/app_colors.dart';
+import 'package:todo_app_route/core/utils/app_strings.dart';
+import 'package:todo_app_route/features/home/view_model/my_provider.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
   const AddTaskBottomSheet({super.key});
@@ -15,11 +13,11 @@ class AddTaskBottomSheet extends StatefulWidget {
 }
 
 class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
-  DateTime selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<MyProvider>(context);
+
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -81,7 +79,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   borderSide: BorderSide(
                       color: provider.mode == ThemeMode.dark
                           ? Colors.white
-                          : AppColors.primary)),
+                          : AppColors.primary,),),
             ),
           ),
           const SizedBox(
@@ -100,10 +98,10 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
           ),
           InkWell(
             onTap: () {
-              selectDataFun();
+              provider.selectDataFun(context);
             },
             child: Text(
-              selectedDate.toString().substring(0, 10),
+              provider.selectedDate.toString().substring(0, 10),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20,
@@ -117,12 +115,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
           ),
           ElevatedButton(
             onPressed: () {
-              TaskModel? model = TaskModel(
-                title: provider.titleController.text,
-                description: provider.descriptionController.text,
-                date: selectedDate.millisecondsSinceEpoch,
-              );
-              FirebaseFunctions.addTask(model);
+          provider.addTask();
               Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
@@ -138,22 +131,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
         ],
       ),
     );
+
   }
 
-  void selectDataFun() async {
-    DateTime? newSelectedDate = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2010),
-      lastDate: DateTime(2025),
-    );
-    if (newSelectedDate != null) {
-      setState(() {
-        selectedDate = newSelectedDate;
-        setState(() {
-
-        });
-      });
-    }
-  }
 }

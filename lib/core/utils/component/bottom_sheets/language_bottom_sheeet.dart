@@ -1,16 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:todo_app_route/utils/app_colors.dart';
-import 'package:todo_app_route/utils/app_strings.dart';
-import 'package:todo_app_route/view_model/providers/my_provider.dart';
+import 'package:todo_app_route/core/utils/app_colors.dart';
+import 'package:todo_app_route/core/utils/app_strings.dart';
+
 
 class LanguageBottomSheeet extends StatelessWidget {
   const LanguageBottomSheeet({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<MyProvider>(context);
+    // var provider = Provider.of<MyProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(

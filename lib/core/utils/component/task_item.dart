@@ -2,10 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_app_route/core/utils/app_colors.dart';
+import 'package:todo_app_route/features/home/model/task_model.dart';
+import 'package:todo_app_route/features/home/view/update_task_screen.dart';
 import 'package:todo_app_route/firebase_functions.dart';
-import 'package:todo_app_route/model/task_model.dart';
-import 'package:todo_app_route/view/update_task_screen.dart';
-import 'package:todo_app_route/utils/app_colors.dart';
 
 import '../app_strings.dart';
 
@@ -16,7 +16,6 @@ class TaskItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       height: 105,
       margin: const EdgeInsets.symmetric(horizontal: 12),
@@ -40,12 +39,19 @@ class TaskItem extends StatelessWidget {
               icon: Icons.edit,
               spacing: 8,
               borderRadius: BorderRadius.only(
-                topRight: context.locale == const Locale('ar') ? const Radius.circular(0) : const Radius.circular(25),
-                bottomRight: context.locale == const Locale('ar') ? const Radius.circular(0) : const Radius.circular(25),
-                topLeft: context.locale == const Locale('ar') ? const Radius.circular(25) : const Radius.circular(0),
-                bottomLeft: context.locale == const Locale('ar') ? const Radius.circular(25) : const Radius.circular(0),
+                topRight: context.locale == const Locale('ar')
+                    ? const Radius.circular(0)
+                    : const Radius.circular(25),
+                bottomRight: context.locale == const Locale('ar')
+                    ? const Radius.circular(0)
+                    : const Radius.circular(25),
+                topLeft: context.locale == const Locale('ar')
+                    ? const Radius.circular(25)
+                    : const Radius.circular(0),
+                bottomLeft: context.locale == const Locale('ar')
+                    ? const Radius.circular(25)
+                    : const Radius.circular(0),
               ),
-
             ),
           ],
         ),
@@ -63,12 +69,19 @@ class TaskItem extends StatelessWidget {
                 spacing: 8,
                 padding: EdgeInsets.zero,
                 borderRadius: BorderRadius.only(
-                  topLeft: context.locale == const Locale('ar') ? const Radius.circular(0) : const Radius.circular(25),
-                  bottomLeft: context.locale == const Locale('ar') ? const Radius.circular(0) : const Radius.circular(25),
-                  topRight: context.locale == const Locale('ar') ? const Radius.circular(25) : const Radius.circular(0),
-                  bottomRight: context.locale == const Locale('ar') ? const Radius.circular(25) : const Radius.circular(0),
+                  topLeft: context.locale == const Locale('ar')
+                      ? const Radius.circular(0)
+                      : const Radius.circular(25),
+                  bottomLeft: context.locale == const Locale('ar')
+                      ? const Radius.circular(0)
+                      : const Radius.circular(25),
+                  topRight: context.locale == const Locale('ar')
+                      ? const Radius.circular(25)
+                      : const Radius.circular(0),
+                  bottomRight: context.locale == const Locale('ar')
+                      ? const Radius.circular(25)
+                      : const Radius.circular(0),
                 ),
-
               ),
             ]),
         child: Padding(
@@ -77,7 +90,8 @@ class TaskItem extends StatelessWidget {
             children: [
               VerticalDivider(
                 thickness: 4,
-                color: model.isDone ? const Color(0xff61E757) : AppColors.primary,
+                color:
+                    model.isDone ? const Color(0xff61E757) : AppColors.primary,
                 indent: 5,
                 endIndent: 5,
               ),
@@ -116,7 +130,17 @@ class TaskItem extends StatelessWidget {
                   ],
                 ),
               ),
-              // Text(model.date.toString().substring(0, 10), style: TextStyle(color: AppColors.grey),),
+
+              Text(
+                DateTime.fromMillisecondsSinceEpoch(model.date)
+                    .toString()
+                    .substring(0, 10),
+                style: TextStyle(color: AppColors.grey, fontSize: 10),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+
               model.isDone
                   ? Text(
                       'Done',

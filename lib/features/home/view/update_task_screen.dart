@@ -1,11 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app_route/features/home/model/task_model.dart';
 import 'package:todo_app_route/firebase_functions.dart';
-import 'package:todo_app_route/model/task_model.dart';
-import 'package:todo_app_route/utils/app_colors.dart';
-import 'package:todo_app_route/utils/app_strings.dart';
-import 'package:todo_app_route/view_model/providers/my_provider.dart';
+import 'package:todo_app_route/core/utils/app_colors.dart';
+import 'package:todo_app_route/core/utils/app_strings.dart';
+
+import '../view_model/my_provider.dart';
 
 class UpdateTaskScreen extends StatefulWidget {
   static const String routeName = "updateTaskScreen";
@@ -17,15 +18,14 @@ class UpdateTaskScreen extends StatefulWidget {
 }
 
 class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
-  DateTime selectedDate = DateTime.now();
-
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<MyProvider>(context);
     TaskModel model = ModalRoute.of(context)?.settings.arguments as TaskModel;
-    // provider.titleController.text = model.title;
-    // provider.descriptionController.text = model.description;
-    // selectedDate = DateTime.fromMillisecondsSinceEpoch(model.date);
+    provider.titleController.text = model.title;
+    provider.descriptionController.text = model.description;
+    // provider.selectedDate = DateTime.fromMillisecondsSinceEpoch(model.date);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -40,7 +40,7 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
             width: double.infinity,
           ),
           Container(
-            height: MediaQuery.sizeOf(context).height*0.76,
+            height: MediaQuery.sizeOf(context).height * 0.76,
             margin: const EdgeInsets.symmetric(horizontal: 28),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -67,11 +67,15 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
                         borderSide: BorderSide(
-                          color: AppColors.primary,),),
+                          color: AppColors.primary,
+                        ),
+                      ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
                         borderSide: BorderSide(
-                          color:AppColors.primary,),),
+                          color: AppColors.primary,
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -85,13 +89,17 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(18),
-                          borderSide: BorderSide(
-                              color: AppColors.primary,),),
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide(
+                          color: AppColors.primary,
+                        ),
+                      ),
                       enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(18),
-                          borderSide: BorderSide(
-                              color:AppColors.primary,),),
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide(
+                          color: AppColors.primary,
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -101,19 +109,24 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                     AppStrings.selectTime.tr(),
                     textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                    ),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
                   ),
                   const SizedBox(
                     height: 18,
                   ),
                   InkWell(
-                    onTap: () {
-                     selectDataFun(context);
+                    onTap: () async {
+                      print(provider.selectedDate.toString().substring(0, 10));
+                      selectDataFun();
+                      print(provider.selectedDate.toString().substring(0, 10));
+                      print(DateTime.fromMillisecondsSinceEpoch(model.date));
                     },
                     child: Text(
-                      selectedDate.toString().substring(0, 10),
+                      provider.selectedDate.toString().substring(0, 10),
+                      // DateTime.fromMillisecondsSinceEpoch(model.date).toString().substring(0,10),
+                      // selectedDate.toString().substring(0, 10),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20,
@@ -131,11 +144,15 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                       onPressed: () {
                         model.title = provider.titleController.text;
                         model.description = provider.descriptionController.text;
-                        model.date = selectedDate.millisecondsSinceEpoch;
-                        FirebaseFunctions.updateTask(model);
+                        model.date = provider.selectedDate.millisecondsSinceEpoch;
 
+                        FirebaseFunctions.updateTask(model);
+                        print(
+                            'after updae date ${provider.selectedDate.toString().substring(0,10)}');
+                        Navigator.pop(context);
                       },
-                      style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary),
                       child: Text(
                         AppStrings.saveChanges.tr(),
                         style: const TextStyle(
@@ -154,21 +171,23 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
       ),
     );
   }
-  selectDataFun(context) async {
-    DateTime? chosenDate = await showDatePicker(
+
+  void selectDataFun() async {
+    var provider = Provider.of<MyProvider>(context,listen: false);
+    DateTime? newSelectedDate = await showDatePicker(
       context: context,
-      initialDate: selectedDate,
+      initialDate: provider.selectedDate,
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(
         const Duration(days: 365),
       ),
     );
-    if (chosenDate != null) {
-      selectedDate = chosenDate;
-      setState(() {
 
-      });
+    if (newSelectedDate != null) {
+      provider.selectedDate = newSelectedDate;
+      print('Selected Date: ${provider.selectedDate}');
+
+      setState(() {});
     }
-
   }
 }
